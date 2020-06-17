@@ -47,7 +47,7 @@ const App = () => {
 						case STORAGE_KEYS.STATUS:
 							if (data[key].hasSeen){
 								setActivePanel(ROUTES.HOME);
-								setUserSeeIntro(false)
+								setUserSeeIntro(true)
 							}
 							break;
 						default:
@@ -74,7 +74,7 @@ const App = () => {
 			await bridge.send ('VKWebAppStorageSet',{
 				key:STORAGE_KEYS.STATUS,
 				value: JSON.stringify({
-					hasSeen: false
+					hasSeen: true
 				})
 			});
 			go(ROUTES.HOME)
