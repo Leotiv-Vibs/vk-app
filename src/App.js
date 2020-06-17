@@ -24,8 +24,7 @@ const App = () => {
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [userSeeIntro, setUserSeeIntro] = useState(false);
-
-
+    
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -69,18 +68,11 @@ const App = () => {
 			setPopout(null);
 		}
 		fetchData();
-	},);
-
-
+	}, );
 
 	const go = panel => {
 		setActivePanel(panel);
 	};
-
-
-
-
-
 	const viewIntro = async function (){
 		try{
 			await bridge.send ('VKWebAppStorageSet',{
@@ -97,7 +89,7 @@ const App = () => {
 
 	return (
 		<View activePanel={activePanel} popout={popout}>
-			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go}  />
+			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} />
 			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} />
 		</View>
 	);
