@@ -24,7 +24,7 @@ const App = () => {
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [userSeeIntro, setUserSeeIntro] = useState(false);
-	const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
 
 
 	useEffect(() => {
@@ -77,21 +77,7 @@ const App = () => {
 		setActivePanel(panel);
 	};
 
-	const calculateTimeLeft = () => {
-		const difference = +new Date("2021-01-01") - +new Date();
-		let timeLeft = {};
 
-		if (difference > 0) {
-			timeLeft = {
-					days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-					hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-					minutes: Math.floor((difference / 1000 / 60) % 60),
-					seconds: Math.floor((difference / 1000) % 60)
-				};
-			}
-
-			return timeLeft;
-		};
 
 
 
@@ -111,7 +97,7 @@ const App = () => {
 
 	return (
 		<View activePanel={activePanel} popout={popout}>
-			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} timerComponents={timeLeft} />
+			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go}  />
 			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} />
 		</View>
 	);
