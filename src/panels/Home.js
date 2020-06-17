@@ -19,6 +19,8 @@ const Home = ({ id, go, fetchedUser }) => (
 			>
 				{`${fetchedUser.first_name} ${fetchedUser.last_name}`}
 
+
+
 			</Cell>
 		</Group>}
 
