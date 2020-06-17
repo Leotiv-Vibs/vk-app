@@ -8,7 +8,7 @@ import Cell from '@vkontakte/vkui/dist/components/Cell/Cell';
 import Div from '@vkontakte/vkui/dist/components/Div/Div';
 import Avatar from '@vkontakte/vkui/dist/components/Avatar/Avatar';
 
-const Home = ({ id, go, fetchedUser }) => (
+const Home = ({ id, go, fetchedUser,counter }) => (
 	<Panel id={id}>
 		<PanelHeader>ВиктоИрина</PanelHeader>
 		{fetchedUser &&
@@ -17,7 +17,7 @@ const Home = ({ id, go, fetchedUser }) => (
 				before={fetchedUser.photo_200 ? <Avatar src={fetchedUser.photo_200}/> : null}
 				description={fetchedUser.city && fetchedUser.city.title ? fetchedUser.city.title : ''}
 			>
-				{`${fetchedUser.first_name} ${fetchedUser.last_name}`}
+				<h1> Countdown: {counter}</h1>
 
 
 
