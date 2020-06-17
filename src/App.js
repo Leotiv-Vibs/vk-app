@@ -23,7 +23,8 @@ const App = () => {
 	const [activePanel, setActivePanel] = useState(ROUTES.INTRO);
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
-	const [userSeeIntro, setUserSeeIntro] = useState(false)
+	const [userSeeIntro, setUserSeeIntro] = useState(false);
+    const [counter, setCounter] = useState(60);
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -32,7 +33,12 @@ const App = () => {
 				schemeAttribute.value = data.scheme ? data.scheme : 'client_light';
 				document.body.attributes.setNamedItem(schemeAttribute);
 			}
+
 		});
+        const timer =
+            counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+        return () => clearInterval(timer);
+
 		async function fetchData() {
 			const user = await bridge.send('VKWebAppGetUserInfo');
 			const storageData = await bridge.send('VKWebAppStorageGet',{
@@ -64,7 +70,7 @@ const App = () => {
 			setPopout(null);
 		}
 		fetchData();
-	}, []);
+	}, [counter]);
 
 	const go = panel => {
 		setActivePanel(panel);
@@ -86,7 +92,7 @@ const App = () => {
 	return (
 		<View activePanel={activePanel} popout={popout}>
 			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} />
-			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro}/>
+			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} counter={counter}/>
 		</View>
 	);
 }
