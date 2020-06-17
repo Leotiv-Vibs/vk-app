@@ -10,7 +10,7 @@ import Avatar from '@vkontakte/vkui/dist/components/Avatar/Avatar';
 
 const Home = ({ id, go, fetchedUser,counter }) => (
 	<Panel id={id}>
-		<PanelHeader>ВиктоИрина</PanelHeader>
+		<PanelHeader>ВикторИрина</PanelHeader>
 		{fetchedUser &&
 		<Group title="User Data Fetched with VK Bridge">
 			<Cell
