@@ -1,0 +1,1 @@
+{"version":3,"sources":["Intro.css"],"names":[],"mappings":"AAAA,MACC,iBAAkB,CAClB,YAAa,CACb,kBAAmB,CACnB,sBAAuB,CACvB,qBACD","file":"main.0a657cf5.chunk.css","sourcesContent":[".User {\n\ttext-align: center;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n\tflex-direction: column;\n}"]}
