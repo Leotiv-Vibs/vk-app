@@ -24,7 +24,7 @@ const App = () => {
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [userSeeIntro, setUserSeeIntro] = useState(false);
-    const [counter, setCounter] = useState(60);
+	const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -36,7 +36,9 @@ const App = () => {
 
 		});
 
-		counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+		setTimeout(() => {
+			setTimeLeft(calculateTimeLeft());
+		}, 1000);
 		async function fetchData() {
 			const user = await bridge.send('VKWebAppGetUserInfo');
 			const storageData = await bridge.send('VKWebAppStorageGet',{
@@ -68,11 +70,38 @@ const App = () => {
 			setPopout(null);
 		}
 		fetchData();
-	}, [counter]);
-	counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+	},);
+	const calculateTimeLeft = () => {
+		const difference = +new Date("2021-01-01") - +new Date();
+		let timeLeft = {};
+
+		if (difference > 0) {
+			timeLeft = {
+				days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+				hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+				minutes: Math.floor((difference / 1000 / 60) % 60),
+				seconds: Math.floor((difference / 1000) % 60)
+			};
+		}
+
+		return timeLeft;
+	};
 	const go = panel => {
 		setActivePanel(panel);
 	};
+	const timerComponents = [];
+
+	Object.keys(timeLeft).forEach(interval => {
+		if (!timeLeft[interval]) {
+			return;
+		}
+
+		timerComponents.push(
+			<span>
+        {timeLeft[interval]} {interval}{" "}
+      </span>
+		);
+	});
 	const viewIntro = async function (){
 		try{
 			await bridge.send ('VKWebAppStorageSet',{
@@ -89,7 +118,7 @@ const App = () => {
 
 	return (
 		<View activePanel={activePanel} popout={popout}>
-			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} counter={counter} />
+			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} timerComponents={timerComponents} />
 			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} />
 		</View>
 	);
