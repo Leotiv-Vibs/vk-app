@@ -35,9 +35,7 @@ const App = () => {
 			}
 
 		});
-        const timer =
-            counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
-        return () => clearInterval(timer);
+
 
 		async function fetchData() {
 			const user = await bridge.send('VKWebAppGetUserInfo');
@@ -70,7 +68,7 @@ const App = () => {
 			setPopout(null);
 		}
 		fetchData();
-	}, [counter]);
+	}, );
 
 	const go = panel => {
 		setActivePanel(panel);
@@ -92,7 +90,7 @@ const App = () => {
 	return (
 		<View activePanel={activePanel} popout={popout}>
 			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} />
-			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} counter={counter}/>
+			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} />
 		</View>
 	);
 }
