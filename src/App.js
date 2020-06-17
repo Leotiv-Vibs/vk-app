@@ -24,7 +24,7 @@ const App = () => {
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [userSeeIntro, setUserSeeIntro] = useState(false);
-	const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -36,9 +36,7 @@ const App = () => {
 
 		});
 
-		setTimeout(() => {
-			setTimeLeft(calculateTimeLeft());
-		}, 1000);
+
 		async function fetchData() {
 			const user = await bridge.send('VKWebAppGetUserInfo');
 			const storageData = await bridge.send('VKWebAppStorageGet',{
@@ -71,37 +69,61 @@ const App = () => {
 		}
 		fetchData();
 	},);
-	const calculateTimeLeft = () => {
-		const difference = +new Date("2021-01-01") - +new Date();
-		let timeLeft = {};
 
-		if (difference > 0) {
-			timeLeft = {
-				days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-				hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-				minutes: Math.floor((difference / 1000 / 60) % 60),
-				seconds: Math.floor((difference / 1000) % 60)
-			};
-		}
 
-		return timeLeft;
-	};
+
 	const go = panel => {
 		setActivePanel(panel);
 	};
-	const timerComponents = [];
 
-	Object.keys(timeLeft).forEach(interval => {
-		if (!timeLeft[interval]) {
-			return;
-		}
 
-		timerComponents.push(
-			<span>
+	const CountdownTimer = async function() {
+		const calculateTimeLeft = () => {
+			const difference = +new Date("2021-01-01") - +new Date();
+			let timeLeft = {};
+
+			if (difference > 0) {
+				timeLeft = {
+					days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+					hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+					minutes: Math.floor((difference / 1000 / 60) % 60),
+					seconds: Math.floor((difference / 1000) % 60)
+				};
+			}
+
+			return timeLeft;
+		};
+
+		const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+		useEffect(() => {
+			setTimeout(() => {
+				setTimeLeft(calculateTimeLeft());
+			}, 1000);
+		});
+
+		const timerComponents = [];
+
+		Object.keys(timeLeft).forEach(interval => {
+			if (!timeLeft[interval]) {
+				return;
+			}
+
+			timerComponents.push(
+				<span>
         {timeLeft[interval]} {interval}{" "}
       </span>
+			);
+		});
+
+		return (
+			<div>
+				<h1>Alligator.io New Year's 2020 Countdown</h1>
+				<h2>With React Hooks!</h2>
+				{timerComponents.length ? timerComponents : <span>Time's up!</span>}
+			</div>
 		);
-	});
+	}
 	const viewIntro = async function (){
 		try{
 			await bridge.send ('VKWebAppStorageSet',{
@@ -118,7 +140,7 @@ const App = () => {
 
 	return (
 		<View activePanel={activePanel} popout={popout}>
-			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} timerComponents={timerComponents} />
+			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} timerComponents={CountdownTimer} />
 			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} />
 		</View>
 	);
