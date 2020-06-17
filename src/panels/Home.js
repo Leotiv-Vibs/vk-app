@@ -19,7 +19,7 @@ const Home = ({ id, go, fetchedUser,counter }) => (
 			>
 				{`${fetchedUser.first_name} ${fetchedUser.last_name}`}
 
-				Countdown: {counter}
+				<p>Countdown: {counter}</p>
 			</Cell>
 		</Group>}
 
