@@ -105,15 +105,22 @@ const App = () => {
 		}
 	}
 	const timerComponents = [];
-
+	let a=0
 	Object.keys(counter).forEach(interval => {
-		if (!counter[interval]) {
+		if (!counter) {
 			return;
 		}
-
+			a+=1
+	if (a<=3)
 		timerComponents.push(
 			<span>
-        {counter[interval]} {interval}{" "}
+        {counter[interval]}{":"}
+      </span>
+		);
+	else
+		timerComponents.push(
+			<span>
+        {counter[interval]}
       </span>
 		);
 	});

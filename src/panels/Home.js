@@ -13,20 +13,21 @@ const Home = ({ id, go, fetchedUser,counter }) => (
 		<PanelHeader>ВикторИрина</PanelHeader>
 		{fetchedUser &&
 		<Group title="User Data Fetched with VK Bridge">
-			<Cell
-				before={fetchedUser.photo_200 ? <Avatar src={fetchedUser.photo_200}/> : null}
-				description={fetchedUser.city && fetchedUser.city.title ? fetchedUser.city.title : ''}
-			>
-				<h1> Countdown: {counter}</h1>
+			<Cell>
+				<h3> {counter}</h3>
+
 
 
 
 			</Cell>
+
 		</Group>}
 
 
 	</Panel>
+
 );
+
 
 Home.propTypes = {
 	id: PropTypes.string.isRequired,
