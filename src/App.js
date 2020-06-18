@@ -20,11 +20,26 @@ const STORAGE_KEYS = {
 
 
 const App = () => {
-	const [activePanel, setActivePanel] = useState(ROUTES.INTRO);
+	const calculateTimeLeft = () => {
+		const difference = +new Date("2021-01-01") - +new Date();
+		let timeLeft = {};
+
+		if (difference > 0) {
+			timeLeft = {
+				days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+				hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+				minutes: Math.floor((difference / 1000 / 60) % 60),
+				seconds: Math.floor((difference / 1000) % 60)
+			};
+		}
+
+		return timeLeft;
+	};
+	const [activePanel, setActivePanel] = useState(ROUTES.HOME);
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [userSeeIntro, setUserSeeIntro] = useState(false);
-	const [counter, setCounter] = useState(60);
+	const [counter, setCounter] = useState(calculateTimeLeft);
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -36,7 +51,9 @@ const App = () => {
 
 		});
 
-		counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+		setTimeout(() => {
+			setCounter(calculateTimeLeft());
+		}, 1000);
 		async function fetchData() {
 			const user = await bridge.send('VKWebAppGetUserInfo');
 			const storageData = await bridge.send('VKWebAppStorageGet',{
@@ -69,21 +86,8 @@ const App = () => {
 		}
 		fetchData();
 	}, [counter]);
-	const calculateTimeLeft = () => {
-		const difference = +new Date("2021-01-01") - +new Date();
-		let timeLeft = {};
 
-		if (difference > 0) {
-			timeLeft = {
-				days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-				hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-				minutes: Math.floor((difference / 1000 / 60) % 60),
-				seconds: Math.floor((difference / 1000) % 60)
-			};
-		}
 
-		return timeLeft;
-	};
 	const go = panel => {
 		setActivePanel(panel);
 	};
@@ -100,10 +104,22 @@ const App = () => {
 			console.log(error);
 		}
 	}
+	const timerComponents = [];
 
+	Object.keys(counter).forEach(interval => {
+		if (!counter[interval]) {
+			return;
+		}
+
+		timerComponents.push(
+			<span>
+        {counter[interval]} {interval}{" "}
+      </span>
+		);
+	});
 	return (
 		<View activePanel={activePanel} popout={popout}>
-			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} counter={counter} />
+			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} counter={timerComponents} />
 			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} />
 		</View>
 	);
