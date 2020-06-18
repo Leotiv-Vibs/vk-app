@@ -8,6 +8,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 import Home from './panels/Home';
 import Intro from './panels/Intro';
+import Cell from "@vkontakte/vkui/dist/components/Cell/Cell";
 
 const ROUTES = {
 	HOME: 'home',
@@ -21,7 +22,7 @@ const STORAGE_KEYS = {
 
 const App = () => {
 	const calculateTimeLeft = () => {
-		const difference = +new Date(2020,5,18,21) - +new Date();
+		const difference = +new Date(2020,5,18,13,27) - +new Date();
 		let timeLeft = {};
 
 		if (difference > 0) {
@@ -40,6 +41,7 @@ const App = () => {
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [userSeeIntro, setUserSeeIntro] = useState(false);
 	const [counter, setCounter] = useState(calculateTimeLeft);
+	const [seeButton, setSeeButton] = useState(false)
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -54,12 +56,15 @@ const App = () => {
 		setTimeout(() => {
 			setCounter(calculateTimeLeft());
 		}, 1000);
+
+
+
 		async function fetchData() {
 			const user = await bridge.send('VKWebAppGetUserInfo');
 			const storageData = await bridge.send('VKWebAppStorageGet',{
 				keys: Object.values(STORAGE_KEYS)
 			});
-			console.log(storageData);
+
 			const data = {};
 			storageData.keys.forEach(({key,value}) =>{
 				try {
@@ -124,9 +129,14 @@ const App = () => {
       </span>
 		);
 	});
+	if(counter.days===0 && counter.hours===0 && counter.minutes<=4 && seeButton===false ){
+		setSeeButton(true)
+		console.log('ds');
+
+	};
 	return (
 		<View activePanel={activePanel} popout={popout}>
-			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} counter={timerComponents} />
+			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} counter={timerComponents} seeButton={seeButton} />
 			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} />
 		</View>
 	);

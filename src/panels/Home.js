@@ -7,13 +7,16 @@ import Group from '@vkontakte/vkui/dist/components/Group/Group';
 import Cell from '@vkontakte/vkui/dist/components/Cell/Cell';
 import Div from '@vkontakte/vkui/dist/components/Div/Div';
 import Avatar from '@vkontakte/vkui/dist/components/Avatar/Avatar';
+import FixedLayout from "@vkontakte/vkui/dist/components/FixedLayout/FixedLayout";
 
-const Home = ({ id, go, fetchedUser,counter }) => (
+const Home = ({ id, go, fetchedUser,counter,seeButton }) => (
+
 	<Panel id={id}>
 		<PanelHeader>ВикторИрина</PanelHeader>
 		{fetchedUser &&
 		<Group title="User Data Fetched with VK Bridge">
 			<Cell>
+
 				<h3> {counter}</h3>
 
 
@@ -22,6 +25,15 @@ const Home = ({ id, go, fetchedUser,counter }) => (
 			</Cell>
 
 		</Group>}
+		{seeButton &&
+		<FixedLayout vertical = 'bottom' >
+			<Div>
+				<Button mode='commerce' size='xl' onClick={go}>
+					Базара зира начальник
+				</Button>
+			</Div>
+		</FixedLayout>
+		}
 
 
 	</Panel>
