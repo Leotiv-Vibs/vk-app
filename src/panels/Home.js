@@ -16,19 +16,14 @@ const Home = ({ id, go, fetchedUser,counter,seeButton }) => (
 		{fetchedUser &&
 		<Group title="User Data Fetched with VK Bridge">
 			<Cell>
-
 				<h3> {counter}</h3>
-
-
-
-
 			</Cell>
 
 		</Group>}
 		{seeButton &&
 		<FixedLayout vertical = 'bottom' >
 			<Div>
-				<Button mode='commerce' size='xl' onClick={go}>
+				<Button mode='commerce' size='xl' onClick={go} >
 					Хочу участвовать в викторине
 				</Button>
 			</Div>

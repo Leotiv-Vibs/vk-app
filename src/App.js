@@ -8,11 +8,13 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 import Home from './panels/Home';
 import Intro from './panels/Intro';
-import Cell from "@vkontakte/vkui/dist/components/Cell/Cell";
+import Victorina from './panels/Victorina';
+
 
 const ROUTES = {
 	HOME: 'home',
 	INTRO: 'intro',
+	VICTORINA: 'victorina',
 }
 
 const STORAGE_KEYS = {
@@ -22,7 +24,7 @@ const STORAGE_KEYS = {
 
 const App = () => {
 	const calculateTimeLeft = () => {
-		const difference = +new Date(2020,5,18,18,48) - +new Date();
+		const difference = +new Date(2020,5,18,21,3) - +new Date();
 		let timeLeft = {};
 
 		if (difference > 0) {
@@ -36,12 +38,13 @@ const App = () => {
 
 		return timeLeft;
 	};
-	const [activePanel, setActivePanel] = useState(ROUTES.HOME);
+	const [activePanel, setActivePanel] = useState(ROUTES.INTRO);
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [userSeeIntro, setUserSeeIntro] = useState(false);
 	const [counter, setCounter] = useState(calculateTimeLeft);
 	const [seeButton, setSeeButton] = useState(false)
+	const [victorina, setVictorina] = useState(true)
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -71,7 +74,7 @@ const App = () => {
 					data[key] = value ? JSON.parse(value) :{};
 					switch (key) {
 						case STORAGE_KEYS.STATUS:
-							if (data[key].hasSeen){
+							if (data[key].hasSeen && victorina){
 								setActivePanel(ROUTES.HOME);
 								setUserSeeIntro(true)
 							}
@@ -96,6 +99,16 @@ const App = () => {
 	const go = panel => {
 		setActivePanel(panel);
 	};
+	const goVictorina = async function(){
+		try {
+			setActivePanel(ROUTES.VICTORINA)
+			setVictorina(false)
+		}
+		catch (e) {
+			console.log(e)
+		}
+	}
+	
 	const viewIntro = async function (){
 		try{
 			await bridge.send ('VKWebAppStorageSet',{
@@ -136,8 +149,9 @@ const App = () => {
 	};
 	return (
 		<View activePanel={activePanel} popout={popout}>
-			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={go} counter={timerComponents} seeButton={seeButton} />
+			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={goVictorina} counter={timerComponents} seeButton={seeButton} />
 			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} />
+			<Victorina id={ROUTES.VICTORINA}  />
 		</View>
 	);
 }
