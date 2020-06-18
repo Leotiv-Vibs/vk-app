@@ -22,7 +22,7 @@ const Intro = ({id,fetchedUser,userSeeIntro,go}) => {
 	return (
 		<Panel id={id} centered ={true}>
 			<PanelHeader>
-				,-,-,-,-,-ff
+				Дайте денек
 			</PanelHeader>
 			{(!userSeeIntro && fetchedUser) &&
 			<Fragment>
