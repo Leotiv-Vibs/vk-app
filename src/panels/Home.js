@@ -29,7 +29,7 @@ const Home = ({ id, go, fetchedUser,counter,seeButton }) => (
 		<FixedLayout vertical = 'bottom' >
 			<Div>
 				<Button mode='commerce' size='xl' onClick={go}>
-					Базара зира начальник
+					Хочу участвовать в викторине
 				</Button>
 			</Div>
 		</FixedLayout>
