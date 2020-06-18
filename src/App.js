@@ -21,7 +21,7 @@ const STORAGE_KEYS = {
 
 const App = () => {
 	const calculateTimeLeft = () => {
-		const difference = +new Date("2021-01-01") - +new Date();
+		const difference = +new Date(2020,5,18,21) - +new Date();
 		let timeLeft = {};
 
 		if (difference > 0) {
