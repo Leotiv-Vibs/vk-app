@@ -14,14 +14,10 @@ import Select from "@vkontakte/vkui/dist/components/Select/Select";
 import FormLayout from "@vkontakte/vkui/dist/components/FormLayout/FormLayout";
 import Textarea from "@vkontakte/vkui/dist/components/Textarea/Textarea";
 
-
 import Epic from "@vkontakte/vkui/dist/components/Epic/Epic";
 import Tabbar from "@vkontakte/vkui/dist/components/Tabbar/Tabbar";
 import TabbarItem from "@vkontakte/vkui/dist/components/TabbarItem/TabbarItem";
 import View from "@vkontakte/vkui/dist/components/View/View";
-
-
-
 
 import Icon24Add from '@vkontakte/icons/dist/24/add';
 import Icon20Like from '@vkontakte/icons/dist/20/like_outline';
@@ -30,8 +26,10 @@ import Icon24Like from '@vkontakte/icons/dist/24/like';
 
 import './Home.css';
 
-const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => {
-	
+
+
+const Home = ({id, city, o, c, handle, search, searchrez, a, add}) => {
+	let profiles = []
 	return (
 
 		<Panel id={id}>
@@ -40,23 +38,17 @@ const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => {
 			<Fragment>
 				<PanelHeader>Tellida</PanelHeader>
 
-				<form action='/profiles'>
-					<FixedLayout vertical='bottom'>
-
-						<Div className='inp' style={{display: 'flex'}}>
-							<input type="text" placeholder="City" name='City' onChange={e => c(e.target.value)}/>
-						</Div>
-					</FixedLayout>
-
-					<FixedLayout vertical='bottom'>
-						<Div style={{display: 'flex'}}>
-							<Button className='Butto' onClick={o}>
-								Отправить
-							</Button>
-						</Div>
-
-					</FixedLayout>
-				</form>
+				<FormLayout>
+					<Input type="text" name="city" key="city" top="city"/>
+					<Button size="xl" onClick={	() => {
+						let xhr = new XMLHttpRequest()
+						xhr.addEventListener('load', () => {
+						profiles = xhr.responseText
+					})
+						xhr.open('GET', `https://vk-tellida.herokuapp.com/profiles`)
+						xhr.send()
+					}}>Продолжить</Button>
+				</FormLayout>
 			</Fragment>
 			}
 
