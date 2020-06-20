@@ -9,36 +9,31 @@ import Avatar from '@vkontakte/vkui/dist/components/Avatar/Avatar';
 import FixedLayout from '@vkontakte/vkui/dist/components/FixedLayout/FixedLayout';
 import Button from '@vkontakte/vkui/dist/components/Button/Button';
 
-
-
-
-
-
 import './Intro.css';
-
-
+import logo from './1.png';
 
 const Intro = ({id,fetchedUser,userSeeIntro,go}) => {
 	return (
 		<Panel id={id} centered ={true}>
 			<PanelHeader>
-				Дайте денек
+					Tellida
 			</PanelHeader>
 			{(!userSeeIntro && fetchedUser) &&
 			<Fragment>
+				<Div><img src={logo}/></Div>
+
 				<Group>
 					<Div className ='User' >
-						{fetchedUser.photo_200 && <Avatar src={fetchedUser.photo_200}> </Avatar>}
-						<h2>Привет, {fetchedUser.first_name}!</h2>
-						<h3>Здесь ты можешь заработать деньги своими знаниями отвечая на вопросы викторины. Для участия в викторине нужно закинуть 50 рублей. Ответив на три вопроса, вы получаете выигрыш в размере (количество участников*50)/(количество победителей)</h3>
+						<h3>Самые необходимые тебе услуги ближе, чем ты думаешь. Просто выбери услугу, и приложение подскажет тебе, кто делает её ближе, лучше и дешевле</h3>
 					</Div>
 				</Group>
 
 
+
 				<FixedLayout vertical = 'bottom' >
-					<Div>
-						<Button mode='commerce' size='xl' onClick={go}>
-							Базара зира начальник
+					<Div style={{display: 'flex'}} >
+						<Button className="Butto" style={{fontsize: '70px'}} onClick={go} >
+							Начать
 						</Button>
 					</Div>
 				</FixedLayout>

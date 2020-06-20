@@ -4,47 +4,50 @@ import View from '@vkontakte/vkui/dist/components/View/View';
 import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';
 
 
+
 import '@vkontakte/vkui/dist/vkui.css';
 
 import Home from './panels/Home';
 import Intro from './panels/Intro';
-import Victorina from './panels/Victorina';
+
 
 
 const ROUTES = {
 	HOME: 'home',
 	INTRO: 'intro',
-	VICTORINA: 'victorina',
+
 }
 
 const STORAGE_KEYS = {
 	STATUS : 'status',
 }
 
+const people = [
+	"Siri",
+	"Alexa",
+	"Google",
+	"Facebook",
+	"Twitter",
+	"Linkedin",
+	"Sinkedin"
+];
+
 
 const App = () => {
-	const calculateTimeLeft = () => {
-		const difference = +new Date(2020,5,18,21,3) - +new Date();
-		let timeLeft = {};
 
-		if (difference > 0) {
-			timeLeft = {
-				days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-				hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-				minutes: Math.floor((difference / 1000 / 60) % 60),
-				seconds: Math.floor((difference / 1000) % 60)
-			};
-		}
-
-		return timeLeft;
-	};
 	const [activePanel, setActivePanel] = useState(ROUTES.INTRO);
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [userSeeIntro, setUserSeeIntro] = useState(false);
-	const [counter, setCounter] = useState(calculateTimeLeft);
-	const [seeButton, setSeeButton] = useState(false)
-	const [victorina, setVictorina] = useState(true)
+	const [city, setCity] = useState('');
+	const [input, setInput] = useState("")
+    const [searchTerm, setSearchTerm] = React.useState("");
+    const [searchResults, setSearchResults] = React.useState([]);
+    const handleChange = e => {
+        setSearchTerm(e.target.value);
+    };
+
+
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -55,11 +58,10 @@ const App = () => {
 			}
 
 		});
-
-		setTimeout(() => {
-			setCounter(calculateTimeLeft());
-		}, 1000);
-
+        const results = people.filter(person =>
+            person.toLowerCase().includes(searchTerm)
+        );
+        setSearchResults(results);
 
 
 		async function fetchData() {
@@ -74,9 +76,9 @@ const App = () => {
 					data[key] = value ? JSON.parse(value) :{};
 					switch (key) {
 						case STORAGE_KEYS.STATUS:
-							if (data[key].hasSeen && victorina){
-								setActivePanel(ROUTES.HOME);
-								setUserSeeIntro(true)
+							if (data[key].hasSeen){
+
+								setUserSeeIntro(false)
 							}
 							break;
 						default:
@@ -93,22 +95,17 @@ const App = () => {
 			setPopout(null);
 		}
 		fetchData();
-	}, [counter]);
+	},[searchTerm] );
 
 
 	const go = panel => {
 		setActivePanel(panel);
 	};
-	const goVictorina = async function(){
-		try {
-			setActivePanel(ROUTES.VICTORINA)
-			setVictorina(false)
-		}
-		catch (e) {
-			console.log(e)
-		}
-	}
-	
+
+
+
+
+
 	const viewIntro = async function (){
 		try{
 			await bridge.send ('VKWebAppStorageSet',{
@@ -122,36 +119,17 @@ const App = () => {
 			console.log(error);
 		}
 	}
-	const timerComponents = [];
-	let a=0
-	Object.keys(counter).forEach(interval => {
-		if (!counter) {
-			return;
+	const submitValue = () => {
+		if (input) {
+			console.log(input)
+			setCity(input)
 		}
-			a+=1
-	if (a<=3)
-		timerComponents.push(
-			<span>
-        {counter[interval]}{":"}
-      </span>
-		);
-	else
-		timerComponents.push(
-			<span>
-        {counter[interval]}
-      </span>
-		);
-	});
-	if(counter.days===0 && counter.hours===0 && counter.minutes<=4 && seeButton===false ){
-		setSeeButton(true)
-		console.log('ds');
-
-	};
+	}
 	return (
 		<View activePanel={activePanel} popout={popout}>
-			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} go={goVictorina} counter={timerComponents} seeButton={seeButton} />
+			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} city={city} o={submitValue} c={setInput} search={searchTerm} serachrez={searchResults} handle={setSearchTerm}/>
 			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} />
-			<Victorina id={ROUTES.VICTORINA}  />
+
 		</View>
 	);
 }
