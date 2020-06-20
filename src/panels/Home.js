@@ -30,8 +30,8 @@ import Icon24Like from '@vkontakte/icons/dist/24/like';
 
 import './Home.css';
 
-const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => {
-	
+const Home = ({id, city, o, c, handle, search, searchrez, a, add}) => {
+	let profiles = []
 	return (
 
 		<Panel id={id}>
@@ -40,7 +40,12 @@ const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => {
 			<Fragment>
 				<PanelHeader>Tellida</PanelHeader>
 
-				<form action='/profiles'>
+				<FormLayout onsubmit="/profiles">
+					<Input type="text" name="city" key="city" top="city" />
+					<Button size="xl">Зарегистрироваться</Button>
+				</FormLayout>
+
+				<FormLayout>
 					<FixedLayout vertical='bottom'>
 
 						<Div className='inp' style={{display: 'flex'}}>
@@ -50,13 +55,13 @@ const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => {
 
 					<FixedLayout vertical='bottom'>
 						<Div style={{display: 'flex'}}>
-							<Button className='Butto' onClick={o}>
+							<Button className='Button' onClick={o}>
 								Отправить
 							</Button>
 						</Div>
 
 					</FixedLayout>
-				</form>
+				</FormLayout>
 			</Fragment>
 			}
 
