@@ -39,7 +39,7 @@ const Home = ({id, city, o, c, handle, search, searchrez, a, add}) => {
 				<PanelHeader>Tellida</PanelHeader>
 
 				<FormLayout>
-					<Input type="text" name="city" key="city" top="city" onChange={state.city=Home.value}/>
+					<Input type="text" name="city" key="city" top="city"/>
 					<Button size="xl" onClick={	() => {
 						let xhr = new XMLHttpRequest()
 						xhr.addEventListener('load', () => {
