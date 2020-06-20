@@ -10,6 +10,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
+  "proxy": "https://vk-tellida.herokuapp.com/",
   "keywords": [],
   "author": "",
   "license": "MIT",

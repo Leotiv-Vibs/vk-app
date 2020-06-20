@@ -30,128 +30,130 @@ import Icon24Like from '@vkontakte/icons/dist/24/like';
 
 import './Home.css';
 
-const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => (
+const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => {
+	
+	return (
 
-	<Panel id={id}>
+		<Panel id={id}>
 
-		{!city &&
-		<Fragment>
-		<PanelHeader>Tellida</PanelHeader>
+			{!city &&
+			<Fragment>
+				<PanelHeader>Tellida</PanelHeader>
 
-<form action='/profiles'>
-				<FixedLayout vertical = 'bottom' >
-					
-					<Div className='inp' style={{display: 'flex'}} >
-						<input type="text" placeholder="City" name='City' onChange={e => c(e.target.value)}/>
+				<form action='/profiles'>
+					<FixedLayout vertical='bottom'>
+
+						<Div className='inp' style={{display: 'flex'}}>
+							<input type="text" placeholder="City" name='City' onChange={e => c(e.target.value)}/>
+						</Div>
+					</FixedLayout>
+
+					<FixedLayout vertical='bottom'>
+						<Div style={{display: 'flex'}}>
+							<Button className='Butto' onClick={o}>
+								Отправить
+							</Button>
+						</Div>
+
+					</FixedLayout>
+				</form>
+			</Fragment>
+			}
+
+			{(city && !add) &&
+			<Fragment>
+
+				<input
+					type="text"
+					placeholder="Search"
+					value={search}
+					onChange={e => handle(e.target.value)}
+					style={{width: '85%'}}
+				/>
+				<HorizontalScroll>
+					<div style={{display: 'flex'}}>
+						<Div>
+							<Button>
+								Доставка товара
+							</Button>
+						</Div>
+						<Div s>
+							<Button>
+								Передержка животных
+							</Button>
+						</Div>
+						<Div>
+							<Button>
+								Услуги татумастера
+							</Button>
+						</Div>
+						<Div>
+							<Button>
+								Услуги реснички
+							</Button>
+						</Div>
+						<Div>
+							<Button>
+								Услуги ноготочки
+							</Button>
+						</Div>
+						<Div>
+							<Button>
+								Клининг услуги
+							</Button>
+						</Div>
+						<Div>
+							<Button>
+								etc.
+							</Button>
+						</Div>
+					</div>
+				</HorizontalScroll>
+				<FixedLayout vertical='bottom'>
+					<Div className='Add'>
+
+						<Button onClick={a} style={{width: '33%'}} before={<Icon24Add/>}/>
+
 					</Div>
 				</FixedLayout>
+			</Fragment>
+			}{add &&
+		< Fragment>
+			<PanelHeader>Регистрация услуги</PanelHeader>
+			<FormLayout>
 
-				<FixedLayout vertical = 'bottom' >
-					<Div  style={{display: 'flex'}} >
-						<Button className='Butto' onClick={o} >
-							Отправить
+				<Textarea top="Самореклама"/>
+				<Input top="Город"/>
+				<Select
+					top="Название услуги"
+					placeholder="Выберите услугу, которую можете предоставить"
+				>
+					<option value="0">Ноготочки</option>
+					<option value="1">Реснички</option>
+					<option value="2">Клининг</option>
+					<option value="2">Передержка</option>
+					<option value="1">Доставка еды или хоз товаров</option>
+					<option value="2">Муж на час</option>
+					<option value="2">Тату мастер</option>
+
+				</Select>
+				<FixedLayout>
+					<Div className='zareg'>
+						<Button>
+							Зарегистрировать услугуФ
 						</Button>
 					</Div>
-				
 				</FixedLayout>
-</form>
-			</Fragment>
+			</FormLayout>
+		</Fragment>
 		}
 
-		{(city && !add) &&
-		<Fragment>
 
-			<input
-				type="text"
-				placeholder="Search"
-				value={search}
-				onChange={e=>handle(e.target.value)}
-				style={{width:'85%'}}
-			/>
-			<HorizontalScroll>
-				<div style={{ display: 'flex' }}>
-					<Div   >
-						<Button   >
-							Доставка товара
-						</Button>
-					</Div>
-					<Div  s >
-						<Button   >
-							Передержка животных
-						</Button>
-					</Div>
-					<Div   >
-						<Button   >
-							Услуги татумастера
-						</Button>
-					</Div>
-					<Div   >
-						<Button   >
-							Услуги реснички
-						</Button>
-					</Div>
-					<Div   >
-						<Button   >
-							Услуги ноготочки
-						</Button>
-					</Div>
-					<Div   >
-						<Button   >
-							Клининг услуги
-						</Button>
-					</Div>
-					<Div   >
-						<Button   >
-							etc.
-						</Button>
-					</Div>
-				</div>
-			</HorizontalScroll>
-<FixedLayout vertical='bottom'  >
-			<Div className='Add' >
+		</Panel>
 
-				<Button onClick={a} style={{width:'33%'}}  before={<Icon24Add/>}/>
-
-			</Div>
-</FixedLayout>
-		</Fragment>
-		}{add &&
-	< Fragment >
-		<PanelHeader>Регистрация услуги</PanelHeader>
-		<FormLayout>
-
-			<Textarea top="Самореклама" />
-			<Input top="Город" />
-			<Select
-				top="Название услуги"
-				placeholder="Выберите услугу, которую можете предоставить"
-			>
-				<option value="0">Ноготочки</option>
-				<option value="1">Реснички</option>
-				<option value="2">Клининг</option>
-				<option value="2">Передержка</option>
-				<option value="1">Доставка еды или хоз товаров</option>
-				<option value="2">Муж на час</option>
-				<option value="2">Тату мастер</option>
-
-			</Select>
-			<FixedLayout >
-				<Div className='zareg' >
-					<Button  >
-						Зарегистрировать услугу
-					</Button>
-				</Div>
-			</FixedLayout>
-		</FormLayout>
-	</Fragment>
-	}
+	);
 
 
-	</Panel>
-
-);
-
-
-
+}
 
 export default Home;

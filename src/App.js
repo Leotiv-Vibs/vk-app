@@ -50,6 +50,7 @@ const App = () => {
 
 
 
+
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
 			if (type === 'VKWebAppUpdateConfig') {
