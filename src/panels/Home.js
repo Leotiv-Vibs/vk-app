@@ -10,26 +10,41 @@ import Avatar from '@vkontakte/vkui/dist/components/Avatar/Avatar';
 import Input from '@vkontakte/vkui/dist/components/Input/Input';
 import FixedLayout from "@vkontakte/vkui/dist/components/FixedLayout/FixedLayout";
 import HorizontalScroll from "@vkontakte/vkui/dist/components/HorizontalScroll/HorizontalScroll";
+import Select from "@vkontakte/vkui/dist/components/Select/Select";
+import FormLayout from "@vkontakte/vkui/dist/components/FormLayout/FormLayout";
+import Textarea from "@vkontakte/vkui/dist/components/Textarea/Textarea";
+
+
+import Epic from "@vkontakte/vkui/dist/components/Epic/Epic";
+import Tabbar from "@vkontakte/vkui/dist/components/Tabbar/Tabbar";
+import TabbarItem from "@vkontakte/vkui/dist/components/TabbarItem/TabbarItem";
+import View from "@vkontakte/vkui/dist/components/View/View";
+
+
+
+
 import Icon24Add from '@vkontakte/icons/dist/24/add';
 import Icon20Like from '@vkontakte/icons/dist/20/like_outline';
 import Icon24Reorder from '@vkontakte/icons/dist/24/reorder';
+import Icon24Like from '@vkontakte/icons/dist/24/like';
 
 import './Home.css';
 
-const Home = ({ id,city,o,c,handle,search,searchrez}) => (
+const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => (
 
 	<Panel id={id}>
-		<PanelHeader>Tellida</PanelHeader>
-		{!city &&
-			<Fragment>
 
+		{!city &&
+		<Fragment>
+		<PanelHeader>Tellida</PanelHeader>
+
+<form action='/profiles'>
 				<FixedLayout vertical = 'bottom' >
+					
 					<Div className='inp' style={{display: 'flex'}} >
-						<input type="text" placeholder="City" onChange={e => c(e.target.value)}/>
+						<input type="text" placeholder="City" name='City' onChange={e => c(e.target.value)}/>
 					</Div>
 				</FixedLayout>
-
-
 
 				<FixedLayout vertical = 'bottom' >
 					<Div  style={{display: 'flex'}} >
@@ -37,11 +52,13 @@ const Home = ({ id,city,o,c,handle,search,searchrez}) => (
 							Отправить
 						</Button>
 					</Div>
+				
 				</FixedLayout>
+</form>
 			</Fragment>
 		}
 
-		{city &&
+		{(city && !add) &&
 		<Fragment>
 
 			<input
@@ -49,74 +66,85 @@ const Home = ({ id,city,o,c,handle,search,searchrez}) => (
 				placeholder="Search"
 				value={search}
 				onChange={e=>handle(e.target.value)}
-				style={{width:'600px'}}
+				style={{width:'85%'}}
 			/>
 			<HorizontalScroll>
 				<div style={{ display: 'flex' }}>
 					<Div   >
 						<Button   >
-							Отправить
+							Доставка товара
 						</Button>
 					</Div>
 					<Div  s >
 						<Button   >
-							Отправить
+							Передержка животных
 						</Button>
 					</Div>
 					<Div   >
 						<Button   >
-							Отправить
+							Услуги татумастера
 						</Button>
 					</Div>
 					<Div   >
 						<Button   >
-							Отправить
+							Услуги реснички
 						</Button>
 					</Div>
 					<Div   >
 						<Button   >
-							Отправить
+							Услуги ноготочки
 						</Button>
 					</Div>
 					<Div   >
 						<Button   >
-							Отправить
+							Клининг услуги
 						</Button>
 					</Div>
 					<Div   >
 						<Button   >
-							Отправить
+							etc.
 						</Button>
 					</Div>
-					<Div   >
-						<Button   >
-							Отправить
-						</Button>
-					</Div>
-
-
-
-
-
-
-
-
 				</div>
 			</HorizontalScroll>
 <FixedLayout vertical='bottom'  >
-			<Div className="footer">
-				<Button  level="3" component="a"  before={<Icon24Reorder/>}/>
-				<Button  level="3" component="a"  before={<Icon24Add/>}/>
-				<Button  level="3" component="a" before={<Icon20Like/>} />
+			<Div className='Add' >
+
+				<Button onClick={a} style={{width:'33%'}}  before={<Icon24Add/>}/>
+
 			</Div>
 </FixedLayout>
 		</Fragment>
+		}{add &&
+	< Fragment >
+		<PanelHeader>Регистрация услуги</PanelHeader>
+		<FormLayout>
 
+			<Textarea top="Самореклама" />
+			<Input top="Город" />
+			<Select
+				top="Название услуги"
+				placeholder="Выберите услугу, которую можете предоставить"
+			>
+				<option value="0">Ноготочки</option>
+				<option value="1">Реснички</option>
+				<option value="2">Клининг</option>
+				<option value="2">Передержка</option>
+				<option value="1">Доставка еды или хоз товаров</option>
+				<option value="2">Муж на час</option>
+				<option value="2">Тату мастер</option>
 
-
-		}
-
-
+			</Select>
+			<FixedLayout >
+				<Div className='zareg' >
+					<Button  >
+						Зарегистрировать услугу
+					</Button>
+				</Div>
+			</FixedLayout>
+		</FormLayout>
+	</Fragment>
+	}
 
 
 	</Panel>

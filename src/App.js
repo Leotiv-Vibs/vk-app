@@ -46,6 +46,7 @@ const App = () => {
     const handleChange = e => {
         setSearchTerm(e.target.value);
     };
+    const [addUsl, setAddUsl] = useState(false);
 
 
 
@@ -119,6 +120,9 @@ const App = () => {
 			console.log(error);
 		}
 	}
+	const uslAdd = ()=>{
+		setAddUsl(true)
+	}
 	const submitValue = () => {
 		if (input) {
 			console.log(input)
@@ -127,7 +131,8 @@ const App = () => {
 	}
 	return (
 		<View activePanel={activePanel} popout={popout}>
-			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} city={city} o={submitValue} c={setInput} search={searchTerm} serachrez={searchResults} handle={setSearchTerm}/>
+			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} city={city} o={submitValue}
+				  c={setInput} search={searchTerm} serachrez={searchResults} handle={setSearchTerm} add={addUsl} a={uslAdd}/>
 			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} />
 
 		</View>

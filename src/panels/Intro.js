@@ -23,7 +23,7 @@ const Intro = ({id,fetchedUser,userSeeIntro,go}) => {
 				<Div><img src={logo}/></Div>
 
 				<Group>
-					<Div className ='User' >
+					<Div className ='User'>
 						<h3>Самые необходимые тебе услуги ближе, чем ты думаешь. Просто выбери услугу, и приложение подскажет тебе, кто делает её ближе, лучше и дешевле</h3>
 					</Div>
 				</Group>
