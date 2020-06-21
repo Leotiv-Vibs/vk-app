@@ -47,6 +47,7 @@ const App = () => {
         setSearchTerm(e.target.value);
     };
     const [addUsl, setAddUsl] = useState(false);
+    const [fav,setFav] = useState(false)
 
 
 
@@ -123,7 +124,17 @@ const App = () => {
 	}
 	const uslAdd = ()=>{
 		setAddUsl(true)
+		setFav(false)
 	}
+	const uslAdd1 = ()=>{
+		setAddUsl(false)
+		setFav(false)
+	}
+	const setFavf = ()=>{
+		setFav(true)
+		setAddUsl(false)
+	}
+
 	const submitValue = () => {
 		if (input) {
 			console.log(input)
@@ -133,7 +144,8 @@ const App = () => {
 	return (
 		<View activePanel={activePanel} popout={popout}>
 			<Home id={ROUTES.HOME} fetchedUser={fetchedUser} city={city} o={submitValue}
-				  c={setInput} search={searchTerm} serachrez={searchResults} handle={setSearchTerm} add={addUsl} a={uslAdd}/>
+				  c={setInput} search={searchTerm} serachrez={searchResults} handle={setSearchTerm} add={addUsl} a={uslAdd} a1={uslAdd1}
+			r={setFavf} fav={fav}/>
 			<Intro id={ROUTES.INTRO} fetchedUser={fetchedUser} go={viewIntro}  userSeeIntro={userSeeIntro} />
 
 		</View>

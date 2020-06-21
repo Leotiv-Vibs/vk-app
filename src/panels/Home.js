@@ -13,6 +13,8 @@ import HorizontalScroll from "@vkontakte/vkui/dist/components/HorizontalScroll/H
 import Select from "@vkontakte/vkui/dist/components/Select/Select";
 import FormLayout from "@vkontakte/vkui/dist/components/FormLayout/FormLayout";
 import Textarea from "@vkontakte/vkui/dist/components/Textarea/Textarea";
+import List from "@vkontakte/vkui/dist/components/List/List";
+
 
 
 import Epic from "@vkontakte/vkui/dist/components/Epic/Epic";
@@ -30,8 +32,9 @@ import Icon24Like from '@vkontakte/icons/dist/24/like';
 
 import './Home.css';
 
-const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => {
-	
+const Home = ({ id,city,o,c,handle,search,searchrez,a,add,a1,r,fav}) => {
+
+
 	return (
 
 		<Panel id={id}>
@@ -40,7 +43,7 @@ const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => {
 			<Fragment>
 				<PanelHeader>Tellida</PanelHeader>
 
-				<form action='/profiles'>
+				<FormLayout action='/profiles'>
 					<FixedLayout vertical='bottom'>
 
 						<Div className='inp' style={{display: 'flex'}}>
@@ -56,11 +59,11 @@ const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => {
 						</Div>
 
 					</FixedLayout>
-				</form>
+				</FormLayout>
 			</Fragment>
 			}
 
-			{(city && !add) &&
+			{(city && !add && !fav) &&
 			<Fragment>
 
 				<input
@@ -109,15 +112,32 @@ const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => {
 						</Div>
 					</div>
 				</HorizontalScroll>
-				<FixedLayout vertical='bottom'>
-					<Div className='Add'>
+				<Epic  tabbar={
+					<Tabbar>
+						<TabbarItem
 
-						<Button onClick={a} style={{width: '33%'}} before={<Icon24Add/>}/>
 
-					</Div>
-				</FixedLayout>
+							data-story="feed"
+							text="Tellida"
+						><Icon24Reorder /></TabbarItem>
+						<TabbarItem
+
+							onClick={a}
+							text="Add"
+						><Icon24Add /></TabbarItem>
+
+
+						<TabbarItem
+							onClick={r}
+							data-story="more"
+							text="Favorite"
+						><Icon24Like /></TabbarItem>
+					</Tabbar>
+				}>
+
+				</Epic>
 			</Fragment>
-			}{add &&
+			}{(add && !fav) &&
 		< Fragment>
 			<PanelHeader>Регистрация услуги</PanelHeader>
 			<FormLayout>
@@ -140,14 +160,75 @@ const Home = ({ id,city,o,c,handle,search,searchrez,a,add}) => {
 				<FixedLayout>
 					<Div className='zareg'>
 						<Button>
-							Зарегистрировать услугуФ
+							Зарегистрировать услугу
 						</Button>
 					</Div>
 				</FixedLayout>
 			</FormLayout>
+			<Epic  tabbar={
+				<Tabbar>
+					<TabbarItem
+
+						onClick={a1}
+						data-story="feed"
+						text="Tellida"
+					><Icon24Reorder /></TabbarItem>
+					<TabbarItem
+
+						onClick={a}
+						text="Add"
+					><Icon24Add /></TabbarItem>
+
+
+					<TabbarItem
+						onClick={r}
+						data-story="more"
+						text="Favorite"
+					><Icon24Like /></TabbarItem>
+				</Tabbar>
+			}></Epic>
 		</Fragment>
 		}
+			{fav &&
+				<Fragment>
 
+				<PanelHeader>
+				List
+				</PanelHeader>
+				<Group>
+				<List>
+				<Cell >Здесь был бы</Cell>
+				<Cell >Список</Cell>
+				<Cell >Избранных исполнителей(((</Cell>
+				</List>
+				</Group>
+					<Epic  tabbar={
+						<Tabbar>
+							<TabbarItem
+
+								onClick={a1}
+								data-story="feed"
+								text="Tellida"
+							><Icon24Reorder /></TabbarItem>
+							<TabbarItem
+
+								onClick={a}
+								text="Add"
+							><Icon24Add /></TabbarItem>
+
+
+							<TabbarItem
+								onClick={r}
+								data-story="more"
+								text="Favorite"
+							><Icon24Like /></TabbarItem>
+						</Tabbar>
+					}>
+
+					</Epic>
+				</Fragment>
+
+			}
 
 		</Panel>
 
